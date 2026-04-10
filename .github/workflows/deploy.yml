@@ -4,23 +4,16 @@ on:
   workflow_call:
     inputs:
       image_name:
-        description: "Nom de l'image (ex: mon-app)"
-        required: true
-        type: string
-      compose_path:
-        description: "Chemin du dossier docker-compose sur le serveur"
         required: true
         type: string
       registry:
-        description: "URL du registry"
         required: false
         type: string
         default: "registry.redyd.dev"
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-    environment: redlab
 
     steps:
       - name: Checkout
@@ -40,26 +33,4 @@ jobs:
           push: true
           tags: |
             ${{ inputs.registry }}/${{ inputs.image_name }}:latest
-            ${{ inputs.registry }}/${{ inputs.image_name }}:${{ github.sha }}
-
-      - name: Copy docker-compose.yml
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "docker-compose.yml"
-          target: ${{ inputs.compose_path }}
-
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            mkdir -p ${{ inputs.compose_path }}
-            cd ${{ inputs.compose_path }}
-            docker compose pull
-            docker compose up -d --remove-orphans
-            docker image prune -f
+            ${{ inputs.registry }}/${{ inputs.image_name }}:${{ github.ref_name }}
