@@ -2,6 +2,16 @@
 
 ## Exemple d'utilisation
 
+### Avant, nécessaire de push une première fois sur le serveur
+
+```
+docker build -t registry.redyd.dev/mon-app:latest .
+
+docker login registry.redyd.dev -u TON_USER -p TON_PASSWORD
+
+docker push registry.redyd.dev/mon-app:latest
+```
+
 ```
 # .github/workflows/deploy.yml
 name: Deploy
