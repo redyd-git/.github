@@ -20,7 +20,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: production
+    environment: redlab
 
     steps:
       - name: Checkout
