@@ -21,6 +21,7 @@ jobs:
 ```
 
 **Veuillez à bien ajouter les variables dans le repo**
+
 **Ne pas oubliez d'ajouter dans le docker-compose le networks proxy**:
 ```
 services:
