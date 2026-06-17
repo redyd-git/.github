@@ -8,7 +8,7 @@ name: Deploy
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   deploy:
