@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy:
-    uses: redyd-git/.github/.github/workflows/deploy.yml@main
+    uses: redyd/.github/.github/workflows/deploy.yml@main
     with:
       image_name: <nom de l'image>
     secrets:
